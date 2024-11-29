@@ -138,11 +138,15 @@ Let's read this code carefully.
 
 The variables `r1`, `r2`, ..., `r10` give you the percent of people who rated that movie a 1, 2, ..., 10. We would like to know the percent of people who rated the movie a 4 or less (i.e., who rated it a 1, 2, 3, or 4). Create a new variable called `per_low` that computes that number.
 
-```{r eval=FALSE}
-movies <- movies %>%
-  mutate(per_low = # fill in some commands here!)
+### QUESTION 4
+
+```{r eval=TRUE}
+movies_ln128 <-movies %>%
+  mutate (per_low = r1+r2+r3+r4)
+movies_ln128
 ```
 
+### QUESTION 5
 ## Putting it together
 
 Now that we have a bunch of wrangling skills, let's put them together. 
@@ -153,10 +157,18 @@ Now that we have a bunch of wrangling skills, let's put them together.
 
 To accomplish that last task, we need a specialty function, `n`. Here's how it works
 
+Low rating is from previous question using per_low where we get the loww ratings of movies. We will then filter to look at per_low and rating giving us all the movies that we consider to be low rating and votes greater than 5 with this we now have to find the total number of movies that are considered low rating wwith votes greater than 5.
+
 ```{r}
-movies %>%
-  summarize(n())
+movies_ln144 <- movies_ln128 %>%
+  filter(per_low > 50 & votes > 5)%>%
+  select(per_low,votes,title)%>%
+  summarize(Bdmvs = n())
+movies_ln144
 ```
+
+4573 movies have a high percent of low ratings with a vote greater than 5. 
+
 
 - what is the average length of movies in the dataset, in hours? 
 - can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
